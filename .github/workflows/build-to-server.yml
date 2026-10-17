@@ -24,7 +24,7 @@ jobs:
       - name: Restore NuGet packages
         run: |
           SLN=$(find . -name "*.sln" | head -n 1)
-          nuget restore "$SLN"
+          dotnet restore "$SLN"
 
 
       - name : Fill Exiled References
@@ -43,7 +43,6 @@ jobs:
         run: |
           export EXILED_REFERENCES=${{ env.EXILED_REFERENCES }}
           SLN=$(find . -name "*.sln" | head -n 1)
-          dotnet restore "$SLN"
           dotnet build "$SLN" --configuration Release --no-restore
 
       - name: Copy plugin to server
