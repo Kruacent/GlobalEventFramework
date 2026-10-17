@@ -29,7 +29,7 @@ jobs:
 
       - name : Fill Exiled References
         run: |
-          wget https://github.com/ExMod-Team/EXILED/releases/lastest/download/Exiled.tar.gz
+          wget https://github.com/ExMod-Team/EXILED/releases/latest/download/Exiled.tar.gz
           mkdir ${{ env.EXILED_REFERENCES }}
           tar -xf Exiled.tar.gz -C ${{ env.EXILED_REFERENCES }}
           find ${{env.SERVER_LOCATION}}/SCPSL_Data/Managed/ -name "*.dll" | xargs cp -t ${{env.EXILED_REFERENCES}}
@@ -37,7 +37,7 @@ jobs:
 
       - name: Download KE.Utils
         run: |
-          wget https://github.com/Kruacent/KE.Utils/releases/lastest/download/KE.Utils.dll -P ${{env.EXILED_REFERENCES}}
+          wget https://github.com/Kruacent/KE.Utils/releases/latest/download/KE.Utils.dll -P ${{env.EXILED_REFERENCES}}
 
       - name: Build solution
         run: |
