@@ -43,7 +43,8 @@ jobs:
         run: |
           export EXILED_REFERENCES=${{ env.EXILED_REFERENCES }}
           SLN=$(find . -name "*.sln" | head -n 1)
-          msbuild "$SLN" /p:Configuration=Release
+          dotnet restore "$SLN"
+          dotnet build "$SLN" --configuration Release --no-restore
 
       - name: Copy plugin to server
         if: github.event_name == 'push' && github.ref_name == 'master'
