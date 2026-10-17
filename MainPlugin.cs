@@ -3,7 +3,7 @@ using System;
 using Exiled.API.Enums;
 using KE.Utils.API.Displays.DisplayMeow;
 using Exiled.API.Interfaces;
-using GlobalEventFramework.GEFE.API.Features;
+using GlobalEventFramework.API.Features;
 
 namespace GlobalEventFramework
 {
