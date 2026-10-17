@@ -49,7 +49,7 @@ jobs:
         if: github.event_name == 'push' && github.ref_name == 'master'
         id: copy_step
         run: |
-          DLL=$(find . -path "*/bin/Release/*KruacentExiled.dll" | head -n 1)
+          DLL=$(find . -path "*/bin/Release/*GlobalEventFramework.dll" | head -n 1)
       
           if [ -z "$DLL" ]; then
             echo "DLL not found!"
