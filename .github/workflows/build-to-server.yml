@@ -38,7 +38,7 @@ jobs:
         
       - name: Fill Other References
         run: |
-          cp -r ${{ env.OTHER_REFERENCES }} ${{env.EXILED_REFERENCES}}
+          cp -r ${{ env.OTHER_REFERENCES }}. ${{env.EXILED_REFERENCES}}
 
       - name: Download KE.Utils
         run: |
