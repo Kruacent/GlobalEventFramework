@@ -60,7 +60,7 @@ jobs:
             echo "DLL not found!"
             exit 1
           fi
-          cp "$DLL" $OUTPUT_FOLDER_PATH/
+          cp "$DLL" $OUTPUT_FOLDER_PATH
 
           echo "dll_path=$DLL" >> $GITHUB_OUTPUT
 
