@@ -13,6 +13,7 @@ env:
   OUTPUT_FOLDER_PATH: $HOME/.config/EXILED/Plugins/
   EXILED_REFERENCES: ${{ github.workspace }}/references
   SERVER_LOCATION: $HOME/steamcmd/scpsl/
+  OTHER_REFERENCES: $HOME/otherReferences/
 jobs:
   build:
     runs-on: self-hosted 
@@ -34,6 +35,10 @@ jobs:
           tar -xf Exiled.tar.gz -C ${{ env.EXILED_REFERENCES }}
           find ${{env.SERVER_LOCATION}}/SCPSL_Data/Managed/ -name "*.dll" | xargs cp -t ${{env.EXILED_REFERENCES}}
           rm Exiled.tar.gz
+        
+      - name: Fill Other References
+        run: |
+          cp -r ${{ env.OTHER_REFERENCES }} ${{env.EXILED_REFERENCES}}
 
       - name: Download KE.Utils
         run: |
