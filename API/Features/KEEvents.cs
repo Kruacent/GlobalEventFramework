@@ -26,10 +26,31 @@ namespace GlobalEventFramework.API.Features
         /// </summary>
         public abstract string Name { get; set; }
         /// <summary>
+        /// <para>The default chance to get this <see cref="KEEvents"/></para>
+        /// <see cref="WeightedChance"/>
+        /// </summary>
+        public virtual int DefaultWeightedChance { get; } = 1;
+
+
+        private int _weight;
+
+        /// <summary>
         /// <para>The chance to get this <see cref="KEEvents"/></para>
         /// <para>Note: Set to 0 or lower to disable it</para>
+        /// <see cref="DefaultWeightedChance"/>
         /// </summary>
-        public virtual int WeightedChance { get; set; } = 1;
+        public int WeightedChance
+        {
+            get
+            {
+                return _weight;
+            }
+            set
+            {
+                _weight = value;
+            }
+        }
+
         /// <summary>
         /// List of incompatible <see cref="KEEvents"/> by its id
         /// </summary>
@@ -261,6 +282,16 @@ namespace GlobalEventFramework.API.Features
 
         public virtual void LogRegister() => 
             Log.Send($"REGISTERED {Name}", Discord.LogLevel.Info, ConsoleColor.Blue);
+
+        public string Parse()
+        {
+            return Name + '_' + WeightedChance;
+        }
+
+
+        
+
+
 
         #region Getter
 

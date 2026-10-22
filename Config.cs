@@ -20,6 +20,8 @@ namespace GlobalEventFramework
 		public int ChanceRedacted { get; set; } = 10;
 		[Description("Activate or not the multiple descriptions")]
 		public bool ActivateAltDescription { get; set; } = true;
+		public bool UseExternalWeights { get; set; } = true;
+		public string ExternalFileName { get; set; } = "KEEventsWeights";
 
 	}
 }
