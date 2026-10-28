@@ -135,10 +135,10 @@ namespace GlobalEventFramework.API.Features
             return true;
         }
 
-        protected override void Disable(KEEvents ev)
+        protected override void Disable()
         {
-            _activeEv.Remove(ev as MiddleEvent);
-            base.Disable(ev);
+            _activeEv.Remove(this);
+            base.Disable();
         }
 
         #region Show

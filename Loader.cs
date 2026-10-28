@@ -77,7 +77,7 @@ namespace GlobalEventFramework
 
                     if (!KEEvents.TryGet(name, out KEEvents kEEvents))
                     {
-                        Log.Warn("couldn't find KEEvents");
+                        Log.Warn("couldn't find KEEvents : "+ name);
                         continue;
                     }
 
@@ -129,6 +129,7 @@ namespace GlobalEventFramework
             for (int i = 0; i < newlines.Length; i++)
             {
                 newlines[i] = keevents[i].Parse();
+                Log.Warn("parsed = " + newlines[i]);
             }
 
             File.WriteAllLines(Path, newlines);

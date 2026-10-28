@@ -149,11 +149,11 @@ namespace GlobalEventFramework.API.Features
         }
 
 
-        protected override void Disable(KEEvents ev)
+        protected override void Disable()
         {
 
-            _activeGE.Remove(ev as GlobalEvent);
-            base.Disable(ev);
+            _activeGE.Remove(this);
+            base.Disable();
         }
 
         internal static void ChooseGlobalEvent(int numberGE = -1)

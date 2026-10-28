@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Exiled.API.Features.Pools;
 using GlobalEventFramework.API.Interfaces;
 using GlobalEventFramework.Events.EventArgs;
 using GlobalEventFramework.Events.Handlers;
@@ -32,7 +33,7 @@ namespace GlobalEventFramework.API.Features
         public virtual int DefaultWeightedChance { get; } = 1;
 
 
-        private int _weight;
+        private int _weight =-1;
 
         /// <summary>
         /// <para>The chance to get this <see cref="KEEvents"/></para>
@@ -77,7 +78,7 @@ namespace GlobalEventFramework.API.Features
 
         public static IEnumerable<KEEvents> RegisterAll()
         {
-            List<Assembly> assemblies = new List<Assembly>();
+            List<Assembly> assemblies = ListPool<Assembly>.Pool.Get();
             foreach(var plugin in Exiled.Loader.Loader.Plugins)
             {
                 if (!assemblies.Contains(plugin.Assembly) && plugin.Config.IsEnabled)
@@ -87,13 +88,18 @@ namespace GlobalEventFramework.API.Features
                     
             }
 
-
+            KELog.Debug("assemblies analyzed " + assemblies.Count);
             IEnumerable<KEEvents> events = ReflectionHelper.GetObjects<KEEvents>(assemblies);
-            foreach(KEEvents ev in events)
+            KELog.Debug("event found " + events.Count());
+            ListPool<Assembly>.Pool.Return(assemblies);
+            int countregistered = 0;
+
+            foreach (KEEvents ev in events)
             {
                 try
                 {
                     ev.Register();
+                    countregistered++;
                 }
                 catch (FailedRegisterException e)
                 {
@@ -101,6 +107,9 @@ namespace GlobalEventFramework.API.Features
                 }
                 
             }
+
+            Log.Info($"Registered {countregistered}/{events.Count()} KEevents");
+
             return events;
             
 
@@ -111,13 +120,17 @@ namespace GlobalEventFramework.API.Features
             {
                 throw new FailedRegisterException($"name already used");
             }
-            LogRegister();
             Init();
         }
 
         public virtual void Init()
         {
             _nameLookup.Add(Name, this);
+            if(WeightedChance < 0)
+            {
+                WeightedChance = DefaultWeightedChance;
+            }
+
             SubscribeEvents();
         }
 
@@ -221,7 +234,8 @@ namespace GlobalEventFramework.API.Features
                 {
                     Timing.KillCoroutines(handle);
                 }
-                ev.Disable(ev);
+                ev.Disable();
+                s_activeEvents.Remove(ev);
                 KEEventsHandler.OnDisabled(new DisabledEventArgs(ev));
             }
         }
@@ -229,7 +243,7 @@ namespace GlobalEventFramework.API.Features
         /// Executed after the <see cref="KEEvents"/> is disabled
         /// </summary>
         /// <param name="ev"></param>
-        protected virtual void Disable(KEEvents ev)
+        protected virtual void Disable()
         {
 
         }
