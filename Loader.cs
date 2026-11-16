@@ -59,7 +59,9 @@ namespace GlobalEventFramework
                     different = true;
                 }
 
-                for (int i = 0; i < lines.Count; i++)
+                int count = Math.Min(lines.Count, keevents.Count);
+
+                for (int i = 0; i < count; i++)
                 {
                     string[] word = lines[i].Split(Separator);
 
