@@ -5,6 +5,7 @@ using GlobalEventFramework.API.Features;
 
 namespace GlobalEventFramework.Commands
 {
+    [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class ForceMiddleEvent : KECommand
     {
         public override string Command { get; } = "forcemiddle";

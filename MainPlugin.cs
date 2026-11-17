@@ -20,6 +20,8 @@ namespace GlobalEventFramework
 
         internal static MainPlugin Instance { get; private set;}
 
+		private Loader Loader { get; set; }
+
 		public static Config Configs => Instance.Config;
 
         public override void OnEnabled()
@@ -27,11 +29,14 @@ namespace GlobalEventFramework
             Instance = this;
             KEEvents.OnEnabled();
 
+            Loader = new Loader();
+            Loader.Load();
         }
 
 		public override void OnDisabled()
 		{
 			KEEvents.OnDisabled();
+			Loader = null;
             Instance = null;
 		}
 
